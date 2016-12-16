@@ -12,9 +12,8 @@ namespace SnakeGame
     {
         static void Main(string[] args)
         {
-            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
-            Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight);
-
+            
+            Rules.NewGame();
         }
     }
 }

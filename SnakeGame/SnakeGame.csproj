@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Direction.cs" />
+    <Compile Include="Models\Field.cs" />
     <Compile Include="Models\Food.cs" />
     <Compile Include="Models\Segment.cs" />
     <Compile Include="Models\Snake.cs" />

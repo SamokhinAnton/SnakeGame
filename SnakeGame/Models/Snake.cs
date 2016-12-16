@@ -12,10 +12,10 @@ namespace SnakeGame.Models
         public static Direction Direction = Direction.right;
         public static void BuildDefaultSnake(int segments)
         {
-            for (int i = 1; i < segments; i++)
+            for (int i = 0; i < segments; i++)
             {
                 var segment = new Segment();
-                segment.X = i;
+                segment.X = i+2;
                 segment.Y = 1;
                 _snake.Add(segment);
                 Console.SetCursorPosition(segment.X, segment.Y);
@@ -35,7 +35,7 @@ namespace SnakeGame.Models
         public static void MoveUp()
         {
             ClearSegment(_snake[0]);
-            _snake.Remove(_snake[0]);
+            _snake.RemoveAt(0);
             var newSegment = new Segment();
             newSegment.X = _snake[_snake.Count() - 1].X;
             newSegment.Y = _snake[_snake.Count() - 1].Y - 1;
@@ -45,7 +45,7 @@ namespace SnakeGame.Models
         public static void MoveDown()
         {
             ClearSegment(_snake[0]);
-            _snake.Remove(_snake[0]);
+            _snake.RemoveAt(0);
             var newSegment = new Segment();
             newSegment.X = _snake[_snake.Count() - 1].X;
             newSegment.Y = _snake[_snake.Count() - 1].Y + 1;
@@ -55,7 +55,7 @@ namespace SnakeGame.Models
         public static void MoveRight()
         {
             ClearSegment(_snake[0]);
-            _snake.Remove(_snake[0]);
+            _snake.RemoveAt(0);
             var newSegment = new Segment();
             newSegment.X = _snake[_snake.Count() - 1].X + 1;
             newSegment.Y = _snake[_snake.Count() - 1].Y;
@@ -65,7 +65,7 @@ namespace SnakeGame.Models
         public static void MoveLeft()
         {
             ClearSegment(_snake[0]);
-            _snake.Remove(_snake[0]);
+            _snake.RemoveAt(0);
             var newSegment = new Segment();
             newSegment.X = _snake[_snake.Count() - 1].X - 1;
             newSegment.Y = _snake[_snake.Count() - 1].Y;
@@ -77,14 +77,14 @@ namespace SnakeGame.Models
             switch (Direction)
             {
                 case Direction.right:
-                    if (_snake[_snake.Count - 1].X >= Console.WindowWidth - 1)
+                    if (_snake[_snake.Count - 1].X >= Console.WindowWidth - 6)
                     {
                         return false;
                     }
                     MoveRight();
                     break;
                 case Direction.left:
-                    if (_snake[_snake.Count - 1].X <= 1)
+                    if (_snake[_snake.Count - 1].X <= 2)
                     {
                         return false;
                     }
@@ -98,7 +98,7 @@ namespace SnakeGame.Models
                     MoveUp();
                     break;
                 case Direction.down:
-                    if (_snake[_snake.Count - 1].Y >= Console.WindowHeight - 1)
+                    if (_snake[_snake.Count - 1].Y >= Console.WindowHeight - 6)
                     {
                         return false;
                     }
@@ -138,5 +138,25 @@ namespace SnakeGame.Models
             AddSegment(segment);
         }
 
+        public static bool BiteOwnTail()
+        {
+            for (int i = 0; i < _snake.Count-1; i++)
+            {
+                if (_snake[_snake.Count - 1].X == _snake[i].X && _snake[_snake.Count - 1].Y == _snake[i].Y)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool EatFood(int foodX, int foodY)
+        {
+            if (_snake[_snake.Count - 1].X == foodX && _snake[_snake.Count - 1].Y == foodY)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
