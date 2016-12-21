@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BestResult.cs" />
+    <Compile Include="GameMenu.cs" />
     <Compile Include="Models\Direction.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\Food.cs" />
+    <Compile Include="Models\ScoreModel.cs" />
     <Compile Include="Models\Segment.cs" />
     <Compile Include="Models\Snake.cs" />
     <Compile Include="Program.cs" />
@@ -54,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\score.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

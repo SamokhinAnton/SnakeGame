@@ -12,8 +12,11 @@ namespace SnakeGame
     {
         static void Main(string[] args)
         {
-            
-            Rules.NewGame();
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+            Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight + 10);
+            Console.CursorVisible = false;
+            GameMenu.Menu();
         }
     }
 }

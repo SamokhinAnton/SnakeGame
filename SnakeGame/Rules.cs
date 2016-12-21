@@ -14,9 +14,10 @@ namespace SnakeGame
         public static DateTime StartTime = DateTime.Now;
         public static Food Food = new Food();
         public static Field Field = new Field();
-        public static int score = 0;
-        public static int speed = 100;
-        public static int eatenFoods = 0;
+        public static int Lives = 3;
+        public static int Score = 0;
+        public static int Speed = 100;
+        public static int EatenFoods = 0;
 
         private static void CheckKeyPress()
         {
@@ -66,13 +67,14 @@ namespace SnakeGame
         {
             if (Snake.EatFood(Food.X, Food.Y))
             {
-                if (++eatenFoods % 5 == 0)
+                if (++EatenFoods % 5 == 0)
                 {
-                    speed -= 5;
+                    Speed -= 5;
                 }
-                score += Food.Value;
+                StartTime = DateTime.Now;
+                Score += Food.Value;
                 Snake.Grow();
-                Field.Statistic(speed, score);
+                Field.Statistic(Speed, Score, Lives);
                 Food = new Food();
                 Food.Appear();
             }
@@ -87,23 +89,46 @@ namespace SnakeGame
                 Food.Appear();
             }
         }
-        public static void NewGame()
+        public static void NewGame(bool status = false)
         {
+            if (status)
+            {
+                Lives = 3;
+                Score = 0;
+                Speed = 100;
+                EatenFoods = 0;
+                StartTime = DateTime.Now;
+                Play = true;
+            }
             Field.GameField();
-            Field.Statistic(speed, score);
+            Field.Statistic(Speed, Score, Lives);
             Food.Appear();
-            Snake.BuildDefaultSnake(15);
+            Snake.BuildDefaultSnake(5);
             Start();
         }
 
         private static void GameOver()
         {
-            Play = false;
-            Console.ForegroundColor = ConsoleColor.Red;
-            var str = "GAME OVER";
-            Console.SetCursorPosition((Console.WindowWidth - str.Length)/2, Console.WindowHeight/2);
-            Console.WriteLine(str);
-            Console.ResetColor();
+            if (Lives > 0)
+            {
+                Console.SetCursorPosition((Console.WindowWidth-20)/2, Console.WindowHeight/2);
+                Console.WriteLine("You lost. Press to continue");
+                Console.ReadKey();
+                Lives--;
+                Console.Clear();
+                Snake.ClearSnake();
+                NewGame();
+            }
+            else
+            {
+                Play = false;
+                Console.ForegroundColor = ConsoleColor.Red;
+                var str = "GAME OVER";
+                Console.SetCursorPosition((Console.WindowWidth - str.Length) / 2, Console.WindowHeight / 2);
+                Console.WriteLine(str);
+                Console.ResetColor();
+                BestResult.WriteResult(Score);
+            }
         }
         private static void Start()
         {
@@ -114,7 +139,7 @@ namespace SnakeGame
                 Move();
                 CheckBiteOwnTail();
                 CheckFood();
-                Thread.Sleep(speed);
+                Thread.Sleep(Speed);
             }
         }
 

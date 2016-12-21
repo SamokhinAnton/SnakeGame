@@ -16,8 +16,8 @@ namespace SnakeGame.Models
         public Food()
         {
             var random = new Random();
-            X = random.Next(1, Console.WindowWidth - 6);
-            Y = random.Next(1, Console.WindowHeight - 6);
+            X = random.Next(2, Console.WindowWidth - 6);
+            Y = random.Next(2, Console.WindowHeight - 6);
             var k = random.Next(1, 9);
             Value = k * Quantity;
             Quantity++;

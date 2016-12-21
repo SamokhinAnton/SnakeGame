@@ -10,10 +10,7 @@ namespace SnakeGame.Models
     {
         public void GameField()
         {
-            Console.OutputEncoding = Encoding.Unicode;
-            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
-            Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight + 10);
-            Console.CursorVisible = false;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             for (int i = 1; i < Console.WindowWidth - 5; i++)
             {
                 Console.SetCursorPosition(i, 0);
@@ -30,13 +27,15 @@ namespace SnakeGame.Models
             }
         }
 
-        public void Statistic(int speed, int score)
+        public void Statistic(int speed, int score, int lives)
         {
             Console.SetCursorPosition(1, Console.WindowHeight - 4);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Score = {0}", score);
-            Console.SetCursorPosition(40, Console.WindowHeight - 4);
+            Console.SetCursorPosition(30, Console.WindowHeight - 4);
             Console.Write("Speed lvl = {0}", (100 - speed)/5);
+            Console.SetCursorPosition(60, Console.WindowHeight - 4);
+            Console.Write("lives = {0}", lives);
         }
     }
 }

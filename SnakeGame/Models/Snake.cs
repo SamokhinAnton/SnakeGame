@@ -9,7 +9,7 @@ namespace SnakeGame.Models
     public static class Snake
     {
         private static List<Segment> _snake = new List<Segment>();
-        public static Direction Direction = Direction.right;
+        public static Direction Direction;
         public static void BuildDefaultSnake(int segments)
         {
             for (int i = 0; i < segments; i++)
@@ -21,6 +21,7 @@ namespace SnakeGame.Models
                 Console.SetCursorPosition(segment.X, segment.Y);
                 Console.Write(segment.Shape);
             }
+            Direction = Direction.right;
         }
         public static void ClearSegment(Segment segment)
         {
@@ -31,6 +32,14 @@ namespace SnakeGame.Models
         {
             Console.SetCursorPosition(segment.X, segment.Y);
             Console.Write(segment.Shape);
+        }
+        public static void ClearSnake()
+        {
+            for (int i = 0; i < _snake.Count; i++)
+            {
+                ClearSegment(_snake[i]);
+            }
+            _snake.Clear();
         }
         public static void MoveUp()
         {
