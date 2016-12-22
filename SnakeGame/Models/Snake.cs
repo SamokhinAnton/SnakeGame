@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 
 namespace SnakeGame.Models
 {
-    public static class Snake
+    public class Snake
     {
-        private static List<Segment> _snake = new List<Segment>();
-        public static Direction Direction;
-        public static void BuildDefaultSnake(int segments)
+        private List<Segment> _snake = new List<Segment>();
+        public Direction Direction { get; set; }
+        private int Segments { get; set; }
+
+        public Snake(int segments)
         {
-            for (int i = 0; i < segments; i++)
+            Direction = Direction.right;
+            Segments = segments;
+        }
+
+        public void BuildDefaultSnake()
+        {
+            for (int i = 0; i < Segments; i++)
             {
                 var segment = new Segment();
                 segment.X = i+2;
@@ -23,17 +31,20 @@ namespace SnakeGame.Models
             }
             Direction = Direction.right;
         }
-        public static void ClearSegment(Segment segment)
+
+        private void ClearSegment(Segment segment)
         {
             Console.SetCursorPosition(segment.X, segment.Y);
             Console.Write(" ");
         }
-        public static void AddSegment(Segment segment)
+
+        private void AddSegment(Segment segment)
         {
             Console.SetCursorPosition(segment.X, segment.Y);
             Console.Write(segment.Shape);
         }
-        public static void ClearSnake()
+
+        public void ClearSnake()
         {
             for (int i = 0; i < _snake.Count; i++)
             {
@@ -41,7 +52,8 @@ namespace SnakeGame.Models
             }
             _snake.Clear();
         }
-        public static void MoveUp()
+
+        private void MoveUp()
         {
             ClearSegment(_snake[0]);
             _snake.RemoveAt(0);
@@ -51,7 +63,8 @@ namespace SnakeGame.Models
             _snake.Add(newSegment);
             AddSegment(newSegment);
         }
-        public static void MoveDown()
+
+        private void MoveDown()
         {
             ClearSegment(_snake[0]);
             _snake.RemoveAt(0);
@@ -61,7 +74,7 @@ namespace SnakeGame.Models
             _snake.Add(newSegment);
             AddSegment(newSegment);
         }
-        public static void MoveRight()
+        private void MoveRight()
         {
             ClearSegment(_snake[0]);
             _snake.RemoveAt(0);
@@ -71,7 +84,8 @@ namespace SnakeGame.Models
             _snake.Add(newSegment);
             AddSegment(newSegment);
         }
-        public static void MoveLeft()
+
+        private void MoveLeft()
         {
             ClearSegment(_snake[0]);
             _snake.RemoveAt(0);
@@ -81,7 +95,8 @@ namespace SnakeGame.Models
             _snake.Add(newSegment);
             AddSegment(newSegment);
         }
-        public static bool Move()
+
+        public bool Move()
         {
             switch (Direction)
             {
@@ -113,13 +128,11 @@ namespace SnakeGame.Models
                     }
                     MoveDown();
                     break;
-                default:
-                    break;
             }
             return true;
         }
 
-        public static void Grow()
+        public void Grow()
         {
             var segment = new Segment();
             switch (Direction)
@@ -147,7 +160,7 @@ namespace SnakeGame.Models
             AddSegment(segment);
         }
 
-        public static bool BiteOwnTail()
+        public bool BiteOwnTail()
         {
             for (int i = 0; i < _snake.Count-1; i++)
             {
@@ -159,7 +172,7 @@ namespace SnakeGame.Models
             return false;
         }
 
-        public static bool EatFood(int foodX, int foodY)
+        public bool EatFood(int foodX, int foodY)
         {
             if (_snake[_snake.Count - 1].X == foodX && _snake[_snake.Count - 1].Y == foodY)
             {

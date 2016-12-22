@@ -12,6 +12,7 @@ namespace SnakeGame
     {
         public static List<ScoreModel> List = new List<ScoreModel>();
         public const string Path = "../../Data/score.txt";
+
         public static void ParseResult()
         {
             var lines = File.ReadAllLines(Path, Encoding.Unicode);
@@ -22,6 +23,7 @@ namespace SnakeGame
                 List.Add(new ScoreModel() { Name = arr[0], Score = int.Parse(arr[1]) });
             }
         }
+
         public static void ViewResults(int top)
         {
             ParseResult();
@@ -34,7 +36,7 @@ namespace SnakeGame
             }
             if(topResults.Count() == 0)
             {
-                Console.WriteLine("There is no any result!");
+                Console.WriteLine("There is no result!");
             }
             Console.WriteLine("PRESS TO RETURN...");
             Console.ReadKey();

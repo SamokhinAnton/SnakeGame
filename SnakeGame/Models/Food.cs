@@ -10,9 +10,10 @@ namespace SnakeGame.Models
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public char Shape { get; private set; } = (char)0x00A4;//
+        public char Shape { get; private set; } = (char)0x00A4;
         public int Value { get; private set; }
         public static int Quantity { get; private set; } = 1;
+
         public Food()
         {
             var random = new Random();
@@ -22,6 +23,7 @@ namespace SnakeGame.Models
             Value = k * Quantity;
             Quantity++;
         }
+
         public void Appear()
         {
             Console.SetCursorPosition(X, Y);
@@ -29,6 +31,7 @@ namespace SnakeGame.Models
             Console.Write(Shape);
             Console.ResetColor();
         }
+
         public void Disappear()
         {
             Console.SetCursorPosition(X, Y);

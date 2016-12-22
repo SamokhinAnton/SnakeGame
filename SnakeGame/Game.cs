@@ -8,18 +8,32 @@ using System.Threading.Tasks;
 
 namespace SnakeGame
 {
-    public static class Rules
+    public class Game
     {
-        public static bool Play = true;
-        public static DateTime StartTime = DateTime.Now;
-        public static Food Food = new Food();
-        public static Field Field = new Field();
-        public static int Lives = 3;
-        public static int Score = 0;
-        public static int Speed = 100;
-        public static int EatenFoods = 0;
+        private bool Play { get; set; }
+        private DateTime StartTime { get; set; }
+        private Food Food { get; set; }
+        private Snake Snake { get; set; }
+        private Field Field { get; set; }
+        private int Lives { get; set; }
+        private int Score { get; set; }
+        private int Speed { get; set; }
+        private int EatenFoods { get; set; }
 
-        private static void CheckKeyPress()
+        public Game()
+        {
+            Play = true;
+            StartTime = DateTime.Now;
+            Food = new Food();
+            Snake = new Snake(6);
+            Field = new Field();
+            Lives = 3;
+            Score = 0;
+            Speed = 100;
+            EatenFoods = 0;
+        }
+
+        private void CheckKeyPress()
         {
             if (Console.KeyAvailable)
             {
@@ -47,7 +61,7 @@ namespace SnakeGame
             }
         }
 
-        private static void Move()
+        private void Move()
         {
             var game = Snake.Move();
             if (!game)
@@ -55,7 +69,8 @@ namespace SnakeGame
                 GameOver();
             }
         }
-        private static void CheckBiteOwnTail()
+
+        private void CheckBiteOwnTail()
         {
             if (Snake.BiteOwnTail())
             {
@@ -63,7 +78,7 @@ namespace SnakeGame
             }
         }
 
-        private static void CheckFood()
+        private void CheckFood()
         {
             if (Snake.EatFood(Food.X, Food.Y))
             {
@@ -79,7 +94,8 @@ namespace SnakeGame
                 Food.Appear();
             }
         }
-        private static void ResetFood()
+
+        private void ResetFood()
         {
             if (StartTime <= DateTime.Now.Subtract(TimeSpan.FromSeconds(10)))
             {
@@ -89,25 +105,17 @@ namespace SnakeGame
                 Food.Appear();
             }
         }
-        public static void NewGame(bool status = false)
+
+        public void NewGame()
         {
-            if (status)
-            {
-                Lives = 3;
-                Score = 0;
-                Speed = 100;
-                EatenFoods = 0;
-                StartTime = DateTime.Now;
-                Play = true;
-            }
             Field.GameField();
             Field.Statistic(Speed, Score, Lives);
             Food.Appear();
-            Snake.BuildDefaultSnake(5);
+            Snake.BuildDefaultSnake();
             Start();
         }
 
-        private static void GameOver()
+        private void GameOver()
         {
             if (Lives > 0)
             {
@@ -130,7 +138,8 @@ namespace SnakeGame
                 BestResult.WriteResult(Score);
             }
         }
-        private static void Start()
+
+        private void Start()
         {
             while (Play)
             {
@@ -142,8 +151,5 @@ namespace SnakeGame
                 Thread.Sleep(Speed);
             }
         }
-
-
-
     }
 }

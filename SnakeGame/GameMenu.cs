@@ -11,6 +11,7 @@ namespace SnakeGame
         public static void Menu()
         {
             var check = true;
+
             while (check)
             {
                 Console.Clear();
@@ -23,7 +24,8 @@ namespace SnakeGame
                 {
                     case ConsoleKey.D1:
                         Console.Clear();
-                        Rules.NewGame(true);
+                        var game = new Game();
+                        game.NewGame();
                         break;
                     case ConsoleKey.D2:
                         Console.Clear();
