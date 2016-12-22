@@ -15,7 +15,7 @@ namespace SnakeGame
 
         public static void ParseResult()
         {
-            var lines = File.ReadAllLines(Path, Encoding.Unicode);
+            var lines = File.ReadAllLines(Path, Encoding.Unicode).Where(l => !string.IsNullOrEmpty(l));
             List.Clear();
             foreach (var item in lines)
             {

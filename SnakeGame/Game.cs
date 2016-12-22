@@ -10,27 +10,27 @@ namespace SnakeGame
 {
     public class Game
     {
-        private bool Play { get; set; }
-        private DateTime StartTime { get; set; }
-        private Food Food { get; set; }
-        private Snake Snake { get; set; }
-        private Field Field { get; set; }
-        private int Lives { get; set; }
-        private int Score { get; set; }
-        private int Speed { get; set; }
-        private int EatenFoods { get; set; }
+        private bool _play { get; set; }
+        private DateTime _startTime { get; set; }
+        private Food _food { get; set; }
+        private Snake _snake { get; set; }
+        private Field _field { get; set; }
+        private int _lives { get; set; }
+        private int _score { get; set; }
+        private int _speed { get; set; }
+        private int _eatenFoods { get; set; }
 
         public Game()
         {
-            Play = true;
-            StartTime = DateTime.Now;
-            Food = new Food();
-            Snake = new Snake(6);
-            Field = new Field();
-            Lives = 3;
-            Score = 0;
-            Speed = 100;
-            EatenFoods = 0;
+            _play = true;
+            _startTime = DateTime.Now;
+            _food = new Food();
+            _snake = new Snake(6);
+            _field = new Field();
+            _lives = 3;
+            _score = 0;
+            _speed = 100;
+            _eatenFoods = 0;
         }
 
         private void CheckKeyPress()
@@ -38,32 +38,32 @@ namespace SnakeGame
             if (Console.KeyAvailable)
             {
                 ConsoleKeyInfo key = Console.ReadKey();
-                if (key.Key == ConsoleKey.LeftArrow && Snake.Direction != Direction.right)
+                if (key.Key == ConsoleKey.LeftArrow && _snake.Direction != Direction.right)
                 {
-                    Snake.Direction = Direction.left;
+                    _snake.Direction = Direction.left;
                 }
-                if (key.Key == ConsoleKey.RightArrow && Snake.Direction != Direction.left)
+                if (key.Key == ConsoleKey.RightArrow && _snake.Direction != Direction.left)
                 {
-                    Snake.Direction = Direction.right;
+                    _snake.Direction = Direction.right;
                 }
-                if (key.Key == ConsoleKey.UpArrow && Snake.Direction != Direction.down)
+                if (key.Key == ConsoleKey.UpArrow && _snake.Direction != Direction.down)
                 {
-                    Snake.Direction = Direction.up;
+                    _snake.Direction = Direction.up;
                 }
-                if (key.Key == ConsoleKey.DownArrow && Snake.Direction != Direction.up)
+                if (key.Key == ConsoleKey.DownArrow && _snake.Direction != Direction.up)
                 {
-                    Snake.Direction = Direction.down;
+                    _snake.Direction = Direction.down;
                 }
                 if (key.Key == ConsoleKey.Escape)
                 {
-                    Play = false;
+                    _play = false;
                 }
             }
         }
 
         private void Move()
         {
-            var game = Snake.Move();
+            var game = _snake.Move();
             if (!game)
             {
                 GameOver();
@@ -72,7 +72,7 @@ namespace SnakeGame
 
         private void CheckBiteOwnTail()
         {
-            if (Snake.BiteOwnTail())
+            if (_snake.BiteOwnTail())
             {
                 GameOver();
             }
@@ -80,75 +80,75 @@ namespace SnakeGame
 
         private void CheckFood()
         {
-            if (Snake.EatFood(Food.X, Food.Y))
+            if (_snake.EatFood(_food.X, _food.Y))
             {
-                if (++EatenFoods % 5 == 0)
+                if (++_eatenFoods % 5 == 0)
                 {
-                    Speed -= 5;
+                    _speed -= 5;
                 }
-                StartTime = DateTime.Now;
-                Score += Food.Value;
-                Snake.Grow();
-                Field.Statistic(Speed, Score, Lives);
-                Food = new Food();
-                Food.Appear();
+                _startTime = DateTime.Now;
+                _score += _food.Value;
+                _snake.Grow();
+                _field.Statistic(_speed, _score, _lives);
+                _food = new Food();
+                _food.Appear();
             }
         }
 
         private void ResetFood()
         {
-            if (StartTime <= DateTime.Now.Subtract(TimeSpan.FromSeconds(10)))
+            if (_startTime <= DateTime.Now.Subtract(TimeSpan.FromSeconds(10)))
             {
-                Food.Disappear();
-                StartTime = DateTime.Now;
-                Food = new Food();
-                Food.Appear();
+                _food.Disappear();
+                _startTime = DateTime.Now;
+                _food = new Food();
+                _food.Appear();
             }
         }
 
         public void NewGame()
         {
-            Field.GameField();
-            Field.Statistic(Speed, Score, Lives);
-            Food.Appear();
-            Snake.BuildDefaultSnake();
+            _field.GameField();
+            _field.Statistic(_speed, _score, _lives);
+            _food.Appear();
+            _snake.BuildDefaultSnake();
             Start();
         }
 
         private void GameOver()
         {
-            if (Lives > 0)
+            if (_lives > 0)
             {
                 Console.SetCursorPosition((Console.WindowWidth-20)/2, Console.WindowHeight/2);
                 Console.WriteLine("You lost. Press to continue");
                 Console.ReadKey();
-                Lives--;
+                _lives--;
                 Console.Clear();
-                Snake.ClearSnake();
+                _snake.ClearSnake();
                 NewGame();
             }
             else
             {
-                Play = false;
+                _play = false;
                 Console.ForegroundColor = ConsoleColor.Red;
                 var str = "GAME OVER";
                 Console.SetCursorPosition((Console.WindowWidth - str.Length) / 2, Console.WindowHeight / 2);
                 Console.WriteLine(str);
                 Console.ResetColor();
-                BestResult.WriteResult(Score);
+                BestResult.WriteResult(_score);
             }
         }
 
         private void Start()
         {
-            while (Play)
+            while (_play)
             {
                 CheckKeyPress();
                 ResetFood();
                 Move();
                 CheckBiteOwnTail();
                 CheckFood();
-                Thread.Sleep(Speed);
+                Thread.Sleep(_speed);
             }
         }
     }

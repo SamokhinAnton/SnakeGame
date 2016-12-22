@@ -10,17 +10,17 @@ namespace SnakeGame.Models
     {
         private List<Segment> _snake = new List<Segment>();
         public Direction Direction { get; set; }
-        private int Segments { get; set; }
+        private int _segments { get; set; }
 
         public Snake(int segments)
         {
             Direction = Direction.right;
-            Segments = segments;
+            _segments = segments;
         }
 
         public void BuildDefaultSnake()
         {
-            for (int i = 0; i < Segments; i++)
+            for (int i = 0; i < _segments; i++)
             {
                 var segment = new Segment();
                 segment.X = i+2;
