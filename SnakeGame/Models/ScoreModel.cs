@@ -9,7 +9,6 @@ namespace SnakeGame.Models
     public class ScoreModel
     {
         public string Name { get; set; }
-
         public int Score { get; set; }
     }
 }

@@ -74,6 +74,7 @@ namespace SnakeGame.Models
             _snake.Add(newSegment);
             AddSegment(newSegment);
         }
+
         private void MoveRight()
         {
             ClearSegment(_snake[0]);
