@@ -10,7 +10,7 @@ namespace SnakeGame.Models
     {
         private List<Segment> _snake = new List<Segment>();
         public Direction Direction { get; set; }
-        private int _segments { get; set; }
+        private int _segments;
 
         public Snake(int segments)
         {

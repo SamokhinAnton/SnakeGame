@@ -10,15 +10,15 @@ namespace SnakeGame
 {
     public class Game
     {
-        private bool _play { get; set; }
-        private DateTime _startTime { get; set; }
-        private Food _food { get; set; }
-        private Snake _snake { get; set; }
-        private Field _field { get; set; }
-        private int _lives { get; set; }
-        private int _score { get; set; }
-        private int _speed { get; set; }
-        private int _eatenFoods { get; set; }
+        private bool _play;
+        private DateTime _startTime;
+        private Food _food;
+        private Snake _snake;
+        private Field _field;
+        private int _lives;
+        private int _score;
+        private int _speed;
+        private int _eatenFoods;
 
         public Game()
         {
